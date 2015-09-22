@@ -123,7 +123,10 @@
     
     CGFloat height = rect.size.height;
     CGFloat width = rect.size.width;
+    CGFloat radius = (height - borderWidth * 2 - paddingTop * 2) / 2;
     
+    CGFloat midY = CGRectGetMidY(rect);
+
     UIBezierPath *path = [UIBezierPath bezierPath];
     if (!self.inEdit && !self.continuousRangeDisplay) {
         CGRect rect = CGRectMake(borderWidth + paddingLeft, borderWidth + paddingTop, width - borderWidth * 2 - paddingLeft - paddingRight,  height - borderWidth * 2 - paddingTop * 2);
@@ -141,9 +144,19 @@
     
     
     if (self.rangePosition == RANGE_POSITION_BEGIN) {
-        path = [UIBezierPath bezierPathWithRect:CGRectMake(paddingLeft+borderWidth, borderWidth+paddingTop, width-borderWidth-paddingRight, height - borderWidth * 2 - paddingTop * 2)];
+        path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(paddingLeft+borderWidth, borderWidth+paddingTop, width-borderWidth-paddingRight, height - borderWidth * 2 - paddingTop * 2) cornerRadius:4.0f];
+        [path moveToPoint:CGPointMake(radius + borderWidth + paddingLeft, paddingTop + borderWidth)];
+        [path addLineToPoint:CGPointMake(width, borderWidth + paddingTop)];
+        [path addLineToPoint:CGPointMake(width, height - borderWidth - paddingTop)];
+        [path addLineToPoint:CGPointMake(radius + borderWidth + paddingLeft, height - borderWidth - paddingTop)];
+        [path closePath];
+
     } else if (self.rangePosition == RANGE_POSITION_END) {
-        path = [UIBezierPath bezierPathWithRect:CGRectMake(0, borderWidth+paddingTop, width-borderWidth-paddingRight, height - borderWidth * 2 - paddingTop * 2)];
+        path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, borderWidth+paddingTop, width-borderWidth-paddingRight, height - borderWidth * 2 - paddingTop * 2) cornerRadius:4.0f];
+        [path moveToPoint:CGPointMake(radius - borderWidth - paddingRight, height - paddingTop - borderWidth)];
+        [path addLineToPoint:CGPointMake(0, height - borderWidth - paddingTop)];
+        [path addLineToPoint:CGPointMake(0, borderWidth + paddingTop)];
+        [path addLineToPoint:CGPointMake(radius - borderWidth - paddingLeft, borderWidth + paddingTop)];
         [path closePath];
     }  else if (self.rangePosition == RANGE_POSITION_MIDDLE){
         [path moveToPoint:CGPointMake(0, borderWidth + paddingTop)];
@@ -152,7 +165,7 @@
         [path addLineToPoint:CGPointMake(0, height - borderWidth - paddingTop)];
         [path closePath];
     } else if (self.rangePosition == RANGE_POSITION_SINGLE) {
-        path =  [UIBezierPath bezierPathWithRoundedRect:CGRectMake(borderWidth + paddingLeft, borderWidth + paddingTop, width - borderWidth * 2 - paddingLeft - paddingRight,  height - borderWidth * 2 - paddingTop * 2) cornerRadius:0.0f];
+        path =  [UIBezierPath bezierPathWithRoundedRect:CGRectMake(borderWidth + paddingLeft, borderWidth + paddingTop, width - borderWidth * 2 - paddingLeft - paddingRight,  height - borderWidth * 2 - paddingTop * 2) cornerRadius:4.0f];
         
         [path closePath];
     }
@@ -178,7 +191,7 @@
     
     CGFloat height = rect.size.height;
     CGFloat width = rect.size.width;
-    UIBezierPath *path =  [UIBezierPath bezierPathWithRoundedRect:CGRectMake(borderWidth + paddingLeft, borderWidth + paddingTop, width - borderWidth * 2 - paddingLeft - paddingRight,  height - borderWidth * 2 - paddingTop * 2) cornerRadius:0.0f];
+    UIBezierPath *path =  [UIBezierPath bezierPathWithRoundedRect:CGRectMake(borderWidth + paddingLeft, borderWidth + paddingTop, width - borderWidth * 2 - paddingLeft - paddingRight,  height - borderWidth * 2 - paddingTop * 2) cornerRadius:4.0f];
     
     [path closePath];
     [self.fillColor setFill];
