@@ -28,6 +28,7 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *weekDayTitle;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *weekDayTitleHeightConstraint;
 @property (weak, nonatomic) IBOutlet GLCalendarMonthCoverView *monthCoverView;
 @property (weak, nonatomic) IBOutlet UIView *magnifierContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *maginifierContentView;
@@ -70,6 +71,7 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
     self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast;
 
     self.ranges = [NSMutableArray array];
+    self.weekDayTitleHeight = 56.0f;
     
     self.calendar = [GLDateUtils calendar];
     
@@ -105,9 +107,10 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
 
 - (void)setupWeekDayTitle
 {
+    [self.weekDayTitleHeightConstraint setConstant:self.weekDayTitleHeight];
     [self.weekDayTitle.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     CGFloat width = (CGRectGetWidth(self.bounds) - self.padding * 2) / 7;
-    CGFloat centerY = self.weekDayTitle.bounds.size.height / 2;
+    CGFloat centerY = self.weekDayTitleHeight / 2;
     NSArray *titles;
     if ([self.delegate respondsToSelector:@selector(weekDayTitlesForCalendarView:)]) {
         titles = [self.delegate weekDayTitlesForCalendarView:self];
@@ -136,7 +139,7 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
     GLCalendarView *appearance = [[self class] appearance];
     self.padding = appearance.padding ?: DEFAULT_PADDING;
     self.rowHeight = appearance.rowHeight ?: DEFAULT_ROW_HEIGHT;
-    self.weekDayTitleAttributes = appearance.weekDayTitleAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:8], NSForegroundColorAttributeName:[UIColor grayColor]};
+    self.weekDayTitleAttributes = appearance.weekDayTitleAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:8], NSForegroundColorAttributeName:[UIColor whiteColor]};
     self.monthCoverAttributes = appearance.monthCoverAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:30]};
     self.monthCoverView.textAttributes = self.monthCoverAttributes;
 }
