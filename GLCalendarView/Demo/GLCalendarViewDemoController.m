@@ -91,11 +91,16 @@
     NSLog(@"did update range: %@", range);
 }
 
+- (BOOL)singleRangeMode:(GLCalendarView *)calendarView{
+    return YES;
+}
+
 - (IBAction)deleteButtonPressed:(id)sender
 {
     if (self.rangeUnderEdit) {
         [self.calendarView removeRange:self.rangeUnderEdit];
     }
 }
+
 
 @end

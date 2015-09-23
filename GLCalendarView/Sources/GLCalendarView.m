@@ -273,29 +273,48 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
 {
     NSDate *date = [self dateForCellAtIndexPath:indexPath];
     GLCalendarDateRange *range = [self selectedRangeForDate:date];
-    
-    // if click in a range
-    if (range && range.editable) {
-        if (range == self.rangeUnderEdit) {
-            return;
-        }
-        // click a different range
-        if (self.rangeUnderEdit && range != self.rangeUnderEdit) {
-            [self finishEditRange:self.rangeUnderEdit continueEditing:YES];
-        }
-        [self beginToEditRange:range];
-    } else {
-        if (self.rangeUnderEdit) {
-            [self finishEditRange:self.rangeUnderEdit continueEditing:NO];
+    if([self.delegate singleRangeMode:self]){
+        if (range && range.editable) {
+            if (range == self.rangeUnderEdit) {
+                return;
+            }
+            // click a different range
+            if (self.rangeUnderEdit && range != self.rangeUnderEdit) {
+                [self finishEditRange:self.rangeUnderEdit continueEditing:YES];
+            }
+            [self beginToEditRange:range];
         } else {
             BOOL canAdd = [self.delegate calenderView:self canAddRangeWithBeginDate:date];
             if (canAdd) {
                 GLCalendarDateRange *rangeToAdd = [self.delegate calenderView:self rangeToAddWithBeginDate:date];
                 [self addRange:rangeToAdd];
+                [self beginToEditRange:rangeToAdd];
             }
         }
+    }else{
+        if (range && range.editable) {
+            if (range == self.rangeUnderEdit) {
+                return;
+            }
+            // click a different range
+            if (self.rangeUnderEdit && range != self.rangeUnderEdit) {
+                [self finishEditRange:self.rangeUnderEdit continueEditing:YES];
+            }
+            [self beginToEditRange:range];
+        } else {
+            if (self.rangeUnderEdit) {
+                [self finishEditRange:self.rangeUnderEdit continueEditing:NO];
+            } else {
+                BOOL canAdd = [self.delegate calenderView:self canAddRangeWithBeginDate:date];
+                if (canAdd) {
+                    GLCalendarDateRange *rangeToAdd = [self.delegate calenderView:self rangeToAddWithBeginDate:date];
+                    [self addRange:rangeToAdd];
+                }
+            }
+        }
+  
     }
-}
+   }
 
 # pragma mark - UICollectionView layout
 
