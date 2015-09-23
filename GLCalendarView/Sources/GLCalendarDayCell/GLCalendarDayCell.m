@@ -47,6 +47,7 @@
     self.futureDayLabelAttributes = appearance.futureDayLabelAttributes ?: self.dayLabelAttributes;
     self.monthLabelAttributes = appearance.monthLabelAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:8]};
     self.todayLabelAttributes = appearance.todayLabelAttributes ?: @{NSFontAttributeName:[UIFont boldSystemFontOfSize:22]};
+    self.todayFillMode = appearance.todayFillMode;
     
     self.backgroundCover.paddingTop = appearance.editCoverPadding ?: 2;
     self.backgroundCover.borderWidth = appearance.editCoverBorderWidth ?: 2;
@@ -122,6 +123,7 @@
         [self setTodayLabelText:[NSString stringWithFormat:@"%ld", (long)day]];
         self.backgroundCover.isToday = YES;
         self.backgroundCover.fillColor = self.todayBackgroundColor;
+        self.backgroundCover.todayFillMode = self.todayFillMode;
     } else if (day == 1) {
         self.monthLabel.textColor = [UIColor redColor];
         [self setMonthLabelText:[self monthText:month]];

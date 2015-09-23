@@ -206,9 +206,18 @@
     CGFloat width = rect.size.width;
     UIBezierPath *path =  [UIBezierPath bezierPathWithRoundedRect:CGRectMake(borderWidth + paddingLeft, borderWidth + paddingTop, width - borderWidth * 2 - paddingLeft - paddingRight,  height - borderWidth * 2 - paddingTop * 2) cornerRadius:4.0f];
     
+    
     [path closePath];
-    [self.fillColor setFill];
-    [path fill];
+
+    if(self.todayFillMode){
+        [self.fillColor setFill];
+        [path fill];
+    }else{
+        [self.strokeColor setStroke];
+        path.lineWidth = 1.0f;
+        [path stroke];
+    }
+
 }
 
 - (void)enlargeBeginPoint:(BOOL)enlarge
