@@ -93,23 +93,23 @@
     }
     
     // adjust background position
-    if (self.position == POSITION_LEFT_EDGE) {
+//    if (self.position == POSITION_LEFT_EDGE) {
+//        self.backgroundCoverRight.constant = 0;
+//        self.backgroundCoverLeft.constant = -self.containerPadding;
+//        self.backgroundCover.paddingLeft = self.containerPadding;
+//        self.backgroundCover.paddingRight = 0;
+//    } else if (self.position == POSITION_RIGHT_EDGE){
+//        self.backgroundCoverRight.constant = -self.containerPadding;
+//        self.backgroundCoverLeft.constant = 0;
+//        self.backgroundCover.paddingLeft = 0;
+//        self.backgroundCover.paddingRight = self.containerPadding;
+//    } else {
         self.backgroundCoverRight.constant = 0;
-        self.backgroundCoverLeft.constant = -self.containerPadding;
-        self.backgroundCover.paddingLeft = self.containerPadding;
-        self.backgroundCover.paddingRight = 0;
-    } else if (self.position == POSITION_RIGHT_EDGE){
-        self.backgroundCoverRight.constant = -self.containerPadding;
         self.backgroundCoverLeft.constant = 0;
         self.backgroundCover.paddingLeft = 0;
-        self.backgroundCover.paddingRight = self.containerPadding;
-    } else {
-        self.backgroundCoverRight.constant = 0;
-        self.backgroundCoverLeft.constant = 0;
-        self.backgroundCover.paddingLeft = 0;
         self.backgroundCover.paddingRight = 0;
-    }
-        
+//    }
+    
     // day label and month label
     if ([self isToday]) {
         self.monthLabel.textColor = [UIColor whiteColor];

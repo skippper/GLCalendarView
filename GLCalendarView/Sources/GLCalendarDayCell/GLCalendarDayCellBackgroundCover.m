@@ -59,75 +59,60 @@
     [self setNeedsDisplay];
 }
 
+
+
 - (void)setInEdit:(BOOL)inEdit
 {
-    
-    [self.beginImageHolder removeFromSuperview];
-    [self.endImageHolder removeFromSuperview];
     _inEdit = inEdit;
     if (inEdit) {
         if (self.rangePosition == RANGE_POSITION_BEGIN) {
-            CGRect imageHolderRect = CGRectMake((self.borderWidth / 2 + self.paddingLeft)-self.pointSize/2, (self.bounds.size.height / 2) - self.pointSize/2, self.pointSize, self.pointSize);
-            self.beginImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect];
-            self.beginImageHolder.image = [UIImage imageNamed:@"big_flight_to.png"];
-            //self.beginImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_to.png"]];
-            //self.beginImageHolder.center = CGPointMake(self.borderWidth / 2 + self.paddingLeft, self.bounds.size.height / 2);
-            [self addSubview:self.beginImageHolder];
-            [self.endImageHolder removeFromSuperview];
+            [self.beginImageHolder setHidden:NO];
+            [self.endImageHolder setHidden:YES];
+
         } else if (self.rangePosition == RANGE_POSITION_END) {
-            CGRect imageHolderRect = CGRectMake((self.bounds.size.width - self.borderWidth / 2 - self.paddingRight)-self.pointSize/2, (self.bounds.size.height / 2) - self.pointSize/2, self.pointSize, self.pointSize);
-            self.endImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect];
-            self.endImageHolder.image = [UIImage imageNamed:@"big_flight_from.png"];
-            
-            //self.endImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_from.png"]];
-            //self.endImageHolder.center = CGPointMake(self.bounds.size.width - self.borderWidth / 2 - self.paddingRight, self.bounds.size.height / 2);
-            [self addSubview:self.endImageHolder];
-            [self.beginImageHolder removeFromSuperview];
+            [self.beginImageHolder setHidden:YES];
+            [self.endImageHolder setHidden:NO];
+
         } else if (self.rangePosition == RANGE_POSITION_SINGLE) {
-          /*  self.beginImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_to.png"]];
-            self.beginImageHolder.center = CGPointMake(self.borderWidth / 2 + self.paddingLeft, self.bounds.size.height / 2);
-          */
+            [self.beginImageHolder setHidden:NO];
+            [self.endImageHolder setHidden:NO];
+
             
-            CGRect imageHolderRect = CGRectMake((self.borderWidth / 2 + self.paddingLeft)-self.pointSize/2, (self.bounds.size.height / 2) - self.pointSize/2, self.pointSize, self.pointSize);
-            self.beginImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect];
-            self.beginImageHolder.image = [UIImage imageNamed:@"big_flight_to.png"];
-            [self addSubview:self.beginImageHolder];
-            
-            /*self.endImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_from.png"]];
-            self.endImageHolder.center = CGPointMake(self.bounds.size.width - self.borderWidth / 2 - self.paddingRight, self.bounds.size.height / 2);
-           */
-            CGRect imageHolderRect2 = CGRectMake((self.bounds.size.width - self.borderWidth / 2 - self.paddingRight)-self.pointSize/2, (self.bounds.size.height / 2) -self.pointSize/2, self.pointSize, self.pointSize);
-            self.endImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect2];
-            self.endImageHolder.image = [UIImage imageNamed:@"big_flight_from.png"];
-            
-            [self addSubview:self.endImageHolder];
         } else {
-            [self.beginImageHolder removeFromSuperview];
-            [self.endImageHolder removeFromSuperview];
+            [self.beginImageHolder setHidden:YES];
+            [self.endImageHolder setHidden:YES];
+
         }
     } else {
-        [self.beginImageHolder removeFromSuperview];
-        [self.endImageHolder removeFromSuperview];
+        [self.beginImageHolder setHidden:YES];
+        [self.endImageHolder setHidden:YES];
+ 
     }
     [self setNeedsDisplay];
 }
 
-- (GLCalendarRangePoint *)beginPoint
+- (UIImageView *)beginImageHolder
 {
-    if (!_beginPoint) {
-        _beginPoint = [[GLCalendarRangePoint alloc] initWithSize:self.pointSize borderWidth:self.borderWidth strokeColor:self.strokeColor];
-        _beginPoint.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
+    if (!_beginImageHolder) {
+        _beginImageHolder = [UIImageView new];
+        _beginImageHolder.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
+        _beginImageHolder.image = [UIImage imageNamed:@"big_flight_to.png"];
+        _beginImageHolder.frame = CGRectMake((self.borderWidth / 2 + self.paddingLeft)-self.pointSize/2, (self.bounds.size.height / 2) - self.pointSize/2, self.pointSize, self.pointSize);
+        [self addSubview:_beginImageHolder];
     }
-    return _beginPoint;
+    return _beginImageHolder;
 }
 
-- (GLCalendarRangePoint *)endPoint
+- (UIImageView *)endImageHolder
 {
-    if (!_endPoint) {
-        _endPoint = [[GLCalendarRangePoint alloc] initWithSize:self.pointSize borderWidth:self.borderWidth strokeColor:self.strokeColor];
-        _endPoint.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+    if (!_endImageHolder) {
+        _endImageHolder = [UIImageView new];
+        _endImageHolder.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+        _endImageHolder.image = [UIImage imageNamed:@"big_flight_from.png"];
+        _endImageHolder.frame = CGRectMake((self.bounds.size.width - self.borderWidth / 2 - self.paddingRight)-self.pointSize/2, (self.bounds.size.height / 2) -self.pointSize/2, self.pointSize, self.pointSize);
+        [self addSubview:_endImageHolder];
     }
-    return _endPoint;
+    return _endImageHolder;
 }
 
 
@@ -229,25 +214,26 @@
 - (void)enlargeBeginPoint:(BOOL)enlarge
 {
     if (enlarge) {
-        [self setPointView:self.beginImageHolder sizeTo:ceilf(self.pointSize * self.pointScale)];
+        [self setPointView:self.beginImageHolder sizeTo:self.pointScale];
     } else {
-        [self setPointView:self.beginImageHolder sizeTo:self.pointSize];
+        [self setPointView:self.beginImageHolder sizeTo:1.0];
     }
 }
 
 - (void)enlargeEndPoint:(BOOL)enlarge
 {
     if (enlarge) {
-        [self setPointView:self.endImageHolder sizeTo:ceilf(self.pointSize * self.pointScale)];
+        [self setPointView:self.endImageHolder sizeTo:self.pointScale];
     } else {
-        [self setPointView:self.endImageHolder sizeTo:self.pointSize];
+        [self setPointView:self.endImageHolder sizeTo:1.0];
     }
 }
 
 - (void)setPointView:(UIView *)pointView sizeTo:(CGFloat)size
 {
-    CGPoint center = pointView.center;
-    pointView.frame = CGRectMake(0, 0, size, size);
-    pointView.center = center;    
-}
+    [UIView animateWithDuration:5 animations:
+    ^{
+        pointView.transform = CGAffineTransformMakeScale(size, size);
+    }];
+    }
 @end
