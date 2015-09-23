@@ -213,7 +213,7 @@
         [self.fillColor setFill];
         [path fill];
     }else{
-        [self.strokeColor setStroke];
+        [self.fillColor setStroke];
         path.lineWidth = 1.0f;
         [path stroke];
     }
