@@ -34,6 +34,9 @@
 @interface GLCalendarDayCellBackgroundCover()
 @property (nonatomic, strong) GLCalendarRangePoint *beginPoint;
 @property (nonatomic, strong) GLCalendarRangePoint *endPoint;
+@property (nonatomic, strong) UIImageView *beginImageHolder;
+@property (nonatomic, strong) UIImageView *endImageHolder;
+
 @end
 @implementation GLCalendarDayCellBackgroundCover
 
@@ -58,28 +61,53 @@
 
 - (void)setInEdit:(BOOL)inEdit
 {
+    
+    [self.beginImageHolder removeFromSuperview];
+    [self.endImageHolder removeFromSuperview];
     _inEdit = inEdit;
     if (inEdit) {
         if (self.rangePosition == RANGE_POSITION_BEGIN) {
-            self.beginPoint.center = CGPointMake(self.borderWidth / 2 + self.paddingLeft, self.bounds.size.height / 2);
-            [self addSubview:self.beginPoint];
-            [_endPoint removeFromSuperview];
+            CGRect imageHolderRect = CGRectMake((self.borderWidth / 2 + self.paddingLeft)-self.pointSize/2, (self.bounds.size.height / 2) - self.pointSize/2, self.pointSize, self.pointSize);
+            self.beginImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect];
+            self.beginImageHolder.image = [UIImage imageNamed:@"big_flight_to.png"];
+            //self.beginImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_to.png"]];
+            //self.beginImageHolder.center = CGPointMake(self.borderWidth / 2 + self.paddingLeft, self.bounds.size.height / 2);
+            [self addSubview:self.beginImageHolder];
+            [self.endImageHolder removeFromSuperview];
         } else if (self.rangePosition == RANGE_POSITION_END) {
-            self.endPoint.center = CGPointMake(self.bounds.size.width - self.borderWidth / 2 - self.paddingRight, self.bounds.size.height / 2);
-            [self addSubview:self.endPoint];
-            [_beginPoint removeFromSuperview];
+            CGRect imageHolderRect = CGRectMake((self.bounds.size.width - self.borderWidth / 2 - self.paddingRight)-self.pointSize/2, (self.bounds.size.height / 2) - self.pointSize/2, self.pointSize, self.pointSize);
+            self.endImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect];
+            self.endImageHolder.image = [UIImage imageNamed:@"big_flight_from.png"];
+            
+            //self.endImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_from.png"]];
+            //self.endImageHolder.center = CGPointMake(self.bounds.size.width - self.borderWidth / 2 - self.paddingRight, self.bounds.size.height / 2);
+            [self addSubview:self.endImageHolder];
+            [self.beginImageHolder removeFromSuperview];
         } else if (self.rangePosition == RANGE_POSITION_SINGLE) {
-            self.beginPoint.center = CGPointMake(self.borderWidth / 2 + self.paddingLeft, self.bounds.size.height / 2);
-            [self addSubview:self.beginPoint];
-            self.endPoint.center = CGPointMake(self.bounds.size.width - self.borderWidth / 2 - self.paddingRight, self.bounds.size.height / 2);
-            [self addSubview:self.endPoint];
+          /*  self.beginImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_to.png"]];
+            self.beginImageHolder.center = CGPointMake(self.borderWidth / 2 + self.paddingLeft, self.bounds.size.height / 2);
+          */
+            
+            CGRect imageHolderRect = CGRectMake((self.borderWidth / 2 + self.paddingLeft)-self.pointSize/2, (self.bounds.size.height / 2) - self.pointSize/2, self.pointSize, self.pointSize);
+            self.beginImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect];
+            self.beginImageHolder.image = [UIImage imageNamed:@"big_flight_to.png"];
+            [self addSubview:self.beginImageHolder];
+            
+            /*self.endImageHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_flight_from.png"]];
+            self.endImageHolder.center = CGPointMake(self.bounds.size.width - self.borderWidth / 2 - self.paddingRight, self.bounds.size.height / 2);
+           */
+            CGRect imageHolderRect2 = CGRectMake((self.bounds.size.width - self.borderWidth / 2 - self.paddingRight)-self.pointSize/2, (self.bounds.size.height / 2) -self.pointSize/2, self.pointSize, self.pointSize);
+            self.endImageHolder = [[UIImageView alloc] initWithFrame:imageHolderRect2];
+            self.endImageHolder.image = [UIImage imageNamed:@"big_flight_from.png"];
+            
+            [self addSubview:self.endImageHolder];
         } else {
-            [_beginPoint removeFromSuperview];
-            [_endPoint removeFromSuperview];
+            [self.beginImageHolder removeFromSuperview];
+            [self.endImageHolder removeFromSuperview];
         }
     } else {
-        [_beginPoint removeFromSuperview];
-        [_endPoint removeFromSuperview];
+        [self.beginImageHolder removeFromSuperview];
+        [self.endImageHolder removeFromSuperview];
     }
     [self setNeedsDisplay];
 }
@@ -201,18 +229,18 @@
 - (void)enlargeBeginPoint:(BOOL)enlarge
 {
     if (enlarge) {
-        [self setPointView:_beginPoint sizeTo:ceilf(self.pointSize * self.pointScale)];
+        [self setPointView:self.beginImageHolder sizeTo:ceilf(self.pointSize * self.pointScale)];
     } else {
-        [self setPointView:_beginPoint sizeTo:self.pointSize];
+        [self setPointView:self.beginImageHolder sizeTo:self.pointSize];
     }
 }
 
 - (void)enlargeEndPoint:(BOOL)enlarge
 {
     if (enlarge) {
-        [self setPointView:_endPoint sizeTo:ceilf(self.pointSize * self.pointScale)];
+        [self setPointView:self.endImageHolder sizeTo:ceilf(self.pointSize * self.pointScale)];
     } else {
-        [self setPointView:_endPoint sizeTo:self.pointSize];
+        [self setPointView:self.endImageHolder sizeTo:self.pointSize];
     }
 }
 
@@ -220,7 +248,6 @@
 {
     CGPoint center = pointView.center;
     pointView.frame = CGRectMake(0, 0, size, size);
-    pointView.center = center;
-    pointView.layer.cornerRadius = size / 2;
+    pointView.center = center;    
 }
 @end
