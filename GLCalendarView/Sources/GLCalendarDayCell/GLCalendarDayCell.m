@@ -113,7 +113,11 @@
     
     // day label and month label
     if ([self isToday]) {
-        self.monthLabel.textColor = [UIColor whiteColor];
+        if(self.todayFillMode){
+            self.monthLabel.textColor = [UIColor whiteColor];
+        }else{
+            self.monthLabel.textColor = self.todayBackgroundColor;
+        }
         NSDateFormatter *todayFormatter = [[NSDateFormatter alloc] init];
         todayFormatter.dateStyle = NSDateFormatterMediumStyle;
         todayFormatter.timeStyle = NSDateFormatterNoStyle;

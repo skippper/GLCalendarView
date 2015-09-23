@@ -48,7 +48,7 @@
     range2.editable = YES;
 
     self.calendarView.ranges = [@[range1, range2] mutableCopy];
-    [GLCalendarDayCell appearance].todayFillMode = YES;
+    [GLCalendarDayCell appearance].todayFillMode = NO;
     
     [self.calendarView reload];
     dispatch_async(dispatch_get_main_queue(), ^{
