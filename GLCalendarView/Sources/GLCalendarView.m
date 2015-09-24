@@ -15,6 +15,7 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
 
 #define DEFAULT_PADDING 6;
 #define DEFAULT_ROW_HEIGHT 54;
+#define DEFAULT_INSET 32.0f;
 
 @interface GLCalendarView()<UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, readwrite) NSCalendar *calendar;
@@ -139,9 +140,13 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
     GLCalendarView *appearance = [[self class] appearance];
     self.padding = appearance.padding ?: DEFAULT_PADDING;
     self.rowHeight = appearance.rowHeight ?: DEFAULT_ROW_HEIGHT;
+    self.calendarInset = appearance.calendarInset ?: DEFAULT_INSET;
     self.weekDayTitleAttributes = appearance.weekDayTitleAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:8], NSForegroundColorAttributeName:[UIColor whiteColor]};
     self.monthCoverAttributes = appearance.monthCoverAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:30]};
     self.monthCoverView.textAttributes = self.monthCoverAttributes;
+    
+    self.collectionView.contentInset = UIEdgeInsetsMake(0.0f, self.calendarInset, 0.0f, self.calendarInset);
+    
 }
 
 #pragma mark - public api
@@ -343,7 +348,7 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
 
 - (CGFloat)cellWidth
 {
-    return (CGRectGetWidth(self.bounds) - self.padding * 2) / 7;
+    return (CGRectGetWidth(self.bounds) - self.padding * 2 - (self.collectionView.contentInset.left + self.collectionView.contentInset.right)) / 7;
 }
 
 # pragma mark - UIScrollView delegate
