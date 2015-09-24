@@ -26,8 +26,6 @@
 
 @interface GLCalendarView : UIView
 @property (nonatomic) CGFloat padding UI_APPEARANCE_SELECTOR;
-@property (nonatomic) CGFloat calendarInset UI_APPEARANCE_SELECTOR;
-
 @property (nonatomic) CGFloat rowHeight UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) NSDictionary *weekDayTitleAttributes UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) NSDictionary *monthCoverAttributes UI_APPEARANCE_SELECTOR;

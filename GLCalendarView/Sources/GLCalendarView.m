@@ -140,12 +140,9 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
     GLCalendarView *appearance = [[self class] appearance];
     self.padding = appearance.padding ?: DEFAULT_PADDING;
     self.rowHeight = appearance.rowHeight ?: DEFAULT_ROW_HEIGHT;
-    self.calendarInset = appearance.calendarInset ?: DEFAULT_INSET;
     self.weekDayTitleAttributes = appearance.weekDayTitleAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:8], NSForegroundColorAttributeName:[UIColor whiteColor]};
     self.monthCoverAttributes = appearance.monthCoverAttributes ?: @{NSFontAttributeName:[UIFont systemFontOfSize:30]};
     self.monthCoverView.textAttributes = self.monthCoverAttributes;
-    
-    self.collectionView.contentInset = UIEdgeInsetsMake(0.0f, self.calendarInset, 0.0f, self.calendarInset);
     
 }
 
