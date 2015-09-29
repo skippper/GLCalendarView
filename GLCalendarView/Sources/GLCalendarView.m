@@ -592,8 +592,8 @@ static NSDate *today;
 - (void)reloadFromBeginDate:(NSDate *)beginDate toDate:(NSDate *)endDate
 {
     NSMutableArray *indexPaths = [NSMutableArray array];
-    NSInteger beginIndex = MAX(0, [GLDateUtils daysBetween:self.firstDate and:beginDate]);
-    NSInteger endIndex = MIN([self collectionView:self.collectionView numberOfItemsInSection:0] - 1, [GLDateUtils daysBetween:self.firstDate and:endDate]);
+    NSInteger beginIndex = beginDate == nil ? 0 : MAX(0, [GLDateUtils daysBetween:self.firstDate and:beginDate]);
+    NSInteger endIndex = endDate == nil ? 0 : MIN([self collectionView:self.collectionView numberOfItemsInSection:0] - 1, [GLDateUtils daysBetween:self.firstDate and:endDate]);
     for (NSInteger i = beginIndex; i <= endIndex; i++) {
         [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:0]];
     }
