@@ -49,6 +49,7 @@
 
     self.calendarView.ranges = [@[range1, range2] mutableCopy];
     [GLCalendarDayCell appearance].todayFillMode = NO;
+    [GLCalendarView appearance].rowHeight = 40;
     
     [self.calendarView reload];
     dispatch_async(dispatch_get_main_queue(), ^{
