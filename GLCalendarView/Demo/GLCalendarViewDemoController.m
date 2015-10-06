@@ -82,6 +82,14 @@
     self.rangeUnderEdit = nil;
 }
 
+-(void)calenderView:(GLCalendarView *)calendarView clickedExistingRange:(GLCalendarDateRange *)range atDate:(NSDate *)date{
+    
+    [self.calendarView removeRange:range];
+    range.beginDate = date;
+    [self.calendarView addRange:range];
+
+
+}
 - (BOOL)calenderView:(GLCalendarView *)calendarView canUpdateRange:(GLCalendarDateRange *)range toBeginDate:(NSDate *)beginDate endDate:(NSDate *)endDate
 {
     return YES;

@@ -280,14 +280,8 @@ static NSString * const CELL_REUSE_IDENTIFIER = @"DayCell";
     GLCalendarDateRange *range = [self selectedRangeForDate:date];
     if([self.delegate singleRangeMode:self]){
         if (range && range.editable) {
-            if (range == self.rangeUnderEdit) {
-                return;
-            }
-            // click a different range
-            if (self.rangeUnderEdit && range != self.rangeUnderEdit) {
-                [self finishEditRange:self.rangeUnderEdit continueEditing:YES];
-            }
-            [self beginToEditRange:range];
+            [self.delegate calenderView:self clickedExistingRange:range atDate:date];
+            [self beginToEditRange:range];            
         } else {
             BOOL canAdd = [self.delegate calenderView:self canAddRangeWithBeginDate:date];
             if (canAdd) {
